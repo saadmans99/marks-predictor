@@ -19,7 +19,7 @@ try:
         model.fit(x,y)
 
         st.subheader("Make a Prediction")
-        user_hours = st.slider("Hours Studied", 0.0, 12.0, 5.0)
+        user_hours = st.slider("hours Studied", 0.0, 12.0, 5.0)
 
         if st.button("Predict Exam Score"):
             user_input = [[user_hours]]
