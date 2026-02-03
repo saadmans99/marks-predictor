@@ -6,7 +6,7 @@ st.title("Student Marks Predictor")
 st.write("Enter the number of hours you studied to predict your exam score.")
 
 try: 
-    df = pd.read_csv('student_study_data.csv')
+    df = pd.read_csv('student_marks.csv')
     if st.checkbox('Show raw data'):
         st.write(df)
 
@@ -27,4 +27,4 @@ try:
             st.success(f"If you study for {user_hours} hours, you will score: {prediction[0]:.2f}")
 
 except FileNotFoundError:
-    st.error("The data file 'student_study_data.csv' was not found.")
+    st.error("The data file 'student_marks.csv' was not found.")
