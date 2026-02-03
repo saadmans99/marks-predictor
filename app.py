@@ -5,22 +5,26 @@ from sklearn.linear_model import LinearRegression
 st.title("Student Marks Predictor")
 st.write("Enter the number of hours you studied to predict your exam score.")
 
-data = {
-    'hours_studied': [1.5, 3.0, 5.0, 8.0, 10.0],
-    'exam_score': [45, 60, 75, 85, 95]
-}
+try: 
+    df = pd.read_csv('student_study_data.csv')
+    if st.checkbox('Show raw data'):
+        st.write(df)
 
-df = pd.DataFrame(data)
+        st.subheader("Visualizing the data")
+        st.scatter_chart(data=df, x='hours_studied', y='exam_score')
 
-x = df[['hours_studied']]
-y = df['exam_score']
-model = LinearRegression()
-model.fit(x, y)
+        x=df[['hours_studied']]
+        y=df['exam_score']
+        model = LinearRegression()
+        model.fit(x,y)
 
-user_hours = st.slider("Hours Studied", min_value=0.0, max_value=12.0, value=5.0)
+        st.subheader("Make a Prediction")
+        user_hours = st.slider("Hours Studied", 0.0, 12.0, 5.0)
 
-if st.button("Predict Score"):
-    user_input = [[user_hours]]
-    prediction = model.predict(user_input)
+        if st.button("Predict Exam Score"):
+            user_input = [[user_hours]]
+            prediction = model.predict(user_input)
+            st.success(f"If you study for {user_hours} hours, you will score: {prediction[0]:.2f}")
 
-    st.success(f"If you study for {user_hours} hours, you will score: {prediction[0]:.2f}")
+except FileNotFoundError:
+    st.error("The data file 'student_study_data.csv' was not found.")
